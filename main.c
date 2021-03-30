@@ -7,7 +7,7 @@ int main()
     int menu;
     float valor_diaria, valor_total, consumo_frigobar;
     char nome_hospede[10][20];
-    char data_entrada[10][10];
+    float data_entrada[10][10];
     char data_saida[10][10];
     char tipo_quarto[10];
     int apartamento[10];

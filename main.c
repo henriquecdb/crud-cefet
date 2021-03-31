@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX 100
+#define MAX 10
 
 int main()
 {
     int menu, numero_dias, apartamento, tipo_quarto;
     float valor_diaria, valor_total, consumo_frigobar = 0, data_entrada, data_saida;
-    char nome_hospede[10][20];
+    char nome_hospede[MAX][20];
 
     do
     {

@@ -3,9 +3,7 @@
 #define MAX 10
 
 
-//CRUD v1.0 = Versão com tudo funcionando certinho
-//CRUD v1.1 = Versão com a variável servico_de_quarto e com a limpeza de quarto no Menu
-
+//Optamos por imaginar que o CRUD seria utilizado pelo recepcionista do HOTEL, e não pelo cliente em si.
 
 int main()
 {
@@ -18,7 +16,7 @@ int main()
     }
 
     for (int i = 0; i < MAX; i++) {
-        servico_de_quarto[i] = 1; //Tem que comecar com 1, visto que o quarto vai estar limpo antes do cliente usar
+        servico_de_quarto[i] = 1;
     }
 
     do
@@ -27,7 +25,7 @@ int main()
         printf("1. Cadastro\n");
         printf("2. Consulta\n");
         printf("3. Alteracao\n");
-        printf("4. Limpeza do Quarto\n"); // Opcao para utilizacao do servico_de_quarto declarado no CRUD parte 1
+        printf("4. Limpeza do Quarto\n");
         printf("0. Sair\n");
 
         scanf("%d", &menu);
@@ -47,16 +45,19 @@ int main()
                     break;
                 }
 
-                printf("Digite o seu nome: \n");
+                printf("Digite o nome do cliente:\n");
                 scanf("%s", nome_hospede[apartamento]);
                 fflush(stdin);
 
                 printf("Digite o tipo de quarto desejado (1 para solteiro ou 2 para casal): \n");
                 scanf("%d", &tipo_quarto[apartamento]);
 
-                printf("Digite o dia e mes de entrada e o dia e mes de saida: \n");
+                printf("Digite o dia e mes de entrada e o dia e mes de saida no formato abaixo:\n");
 
-                printf("Por exemplo 03(dia) (04) mes 15(dia de saida) 04(mes de saida) \n");
+                printf("Dia de entrada:Ex(03)\n");
+                printf("Mes de entrada:Ex(02)\n");
+                printf("Dia de saida:(07)\n");
+                printf("Mes de saida:(02)\n");
                 scanf("%d", &dia_entrada[apartamento]);
                 scanf("%d", &mes_entrada[apartamento]);
                 scanf( "%d", &dia_saida[apartamento]);
@@ -73,11 +74,11 @@ int main()
                 break;
 
             case 2:
-                printf("Ola cliente, por favor digite o numero do quarto:\n");
+                printf("Digite o numero do quarto do cliente:\n");
                 scanf("%d", &apartamento);
 
 
-                printf("Oi %s, seu tipo de quarto: %d\n", nome_hospede[apartamento], tipo_quarto[apartamento]);
+                printf("hospede: %s, / Tipo de quarto: %d\n", nome_hospede[apartamento], tipo_quarto[apartamento]);
                 printf("Dia de entrada e mes: %.d/%.d\n", dia_entrada[apartamento], mes_entrada[apartamento]);
                 printf("Dia de saida e mes: %.d/%.d\n", dia_saida[apartamento], mes_saida[apartamento]);
 
@@ -100,7 +101,7 @@ int main()
                 break;
 
             case 3:
-                printf("Ola cliente, por favor digite o numero do quarto:\n");
+                printf("Digite o numero do quarto do cliente\n");
                 scanf("%d", &apartamento);
 
                 if (ocupado[apartamento] == 0){
@@ -109,7 +110,7 @@ int main()
                 }
 
 
-                printf("Oi %s, seu tipo de quarto: %d\n", nome_hospede[apartamento], tipo_quarto[apartamento]);
+                printf("Hospede: %s, / Tipo de quarto: %d\n", nome_hospede[apartamento], tipo_quarto[apartamento]);
                 printf("Dia de entrada e mes: %.d/%.d\n", dia_entrada[apartamento], mes_entrada[apartamento]);
                 printf("Dia de saida e mes: %.d/%.d\n", dia_saida[apartamento], mes_saida[apartamento]);
 
@@ -123,9 +124,12 @@ int main()
                 printf("Caso nao seja interesse do cliente mudar, favor digitar o atual tipo de quarto: \n");
                 scanf("%d", &tipo_quarto[apartamento]);
 
-                printf("Digite o dia e mes de entrada e o dia e mes de saida: \n");
+                printf("Digite o dia e mes de entrada e o dia e mes de saida no formato abaixo:\n");
 
-                printf("Por exemplo 03(dia) (04) mes 15(dia de saida) 04(mes de saida) \n");
+                printf("Dia de entrada:Ex(03)\n");
+                printf("Mes de entrada:Ex(02)\n");
+                printf("Dia de saida:(07)\n");
+                printf("Mes de saida:(02)\n");
                 scanf("%d", &dia_entrada[apartamento]);
                 scanf("%d", &mes_entrada[apartamento]);
                 scanf( "%d", &dia_saida[apartamento]);

@@ -1,13 +1,25 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #define MAX 10
+
+
+//CRUD v1.0 = Versão com tudo funcionando certinho
+//CRUD v1.1 = Versão com a variável servico_de_quarto e com a limpeza de quarto no Menu
+
 
 int main()
 {
-    int menu, numero_dias, apartamento, tipo_quarto;
-    float valor_diaria, valor_total, consumo_frigobar = 0, data_entrada, data_saida;
+    int menu, numero_dias, apartamento, tipo_quarto[MAX];
+    int valor_diaria, valor_total, consumo_frigobar[MAX], dia_entrada[MAX], mes_entrada[MAX], dia_saida[MAX], mes_saida[MAX], valor_consumo, ocupado[MAX], servico_de_quarto[MAX];
     char nome_hospede[MAX][20];
+
+    for (int i = 0; i < MAX; i++){
+        ocupado[i] = 0;
+    }
+
+    for (int i = 0; i < MAX; i++) {
+        servico_de_quarto[i] = 1; //Tem que comecar com 1, visto que o quarto vai estar limpo antes do cliente usar
+    }
 
     do
     {
@@ -15,6 +27,7 @@ int main()
         printf("1. Cadastro\n");
         printf("2. Consulta\n");
         printf("3. Alteracao\n");
+        printf("4. Limpeza do Quarto\n"); // Opcao para utilizacao do servico_de_quarto declarado no CRUD parte 1
         printf("0. Sair\n");
 
         scanf("%d", &menu);
@@ -22,68 +35,121 @@ int main()
         switch (menu)
         {
             case 1:
+                printf("Digite o numero do apartamento desejado (1 a 10): \n");
+                scanf("%d", &apartamento);
+
+                if (ocupado[apartamento] == 1){
+                    printf("O quarto esta ocupado, tente outro.\n");
+                    break;
+                }
+                if (servico_de_quarto[apartamento] == 0){
+                    printf("O quarto desejado nao esta limpo.\n");
+                    break;
+                }
+
                 printf("Digite o seu nome: \n");
-                scanf("%s", nome_hospede);
+                scanf("%s", nome_hospede[apartamento]);
+                fflush(stdin);
 
                 printf("Digite o tipo de quarto desejado (1 para solteiro ou 2 para casal): \n");
-                scanf("%d", &tipo_quarto);
+                scanf("%d", &tipo_quarto[apartamento]);
 
-                printf("Digite a data de entrada e saida: \n");
-                scanf("%f %f", &data_entrada, &data_saida);
+                printf("Digite o dia e mes de entrada e o dia e mes de saida: \n");
 
-                printf("Digite o numero do apartamento escolhido (1 a 10) e o numero de dias: \n");
-                scanf("%d %d", &apartamento, &numero_dias);
+                printf("Por exemplo 03(dia) (04) mes 15(dia de saida) 04(mes de saida) \n");
+                scanf("%d", &dia_entrada[apartamento]);
+                scanf("%d", &mes_entrada[apartamento]);
+                scanf( "%d", &dia_saida[apartamento]);
+                scanf("%d", &mes_saida[apartamento]);
 
-                printf("Deseja consumir a taxa do frigobar (1 e 0): \n");
-                scanf("%f", &consumo_frigobar);
+                printf("Deseja consumir a taxa do frigobar? 1 para Nao, 2 para Sim \n");
+                scanf("%d", &consumo_frigobar[apartamento]);
+
+
+                printf("Cadastro completo.\n");
+
+                ocupado[apartamento] = 1;
+                servico_de_quarto[apartamento] = 0;
                 break;
 
             case 2:
-                printf("Oi %s, seu tipo de quarto: %d\n", nome_hospede, tipo_quarto);
-                printf("Data de entrada e saida: %.f e %.f\n", data_entrada, data_saida);
+                printf("Ola cliente, por favor digite o numero do quarto:\n");
+                scanf("%d", &apartamento);
+
+
+                printf("Oi %s, seu tipo de quarto: %d\n", nome_hospede[apartamento], tipo_quarto[apartamento]);
+                printf("Dia de entrada e mes: %.d/%.d\n", dia_entrada[apartamento], mes_entrada[apartamento]);
+                printf("Dia de saida e mes: %.d/%.d\n", dia_saida[apartamento], mes_saida[apartamento]);
+
+                if (consumo_frigobar[apartamento] == 1) {
+                    valor_consumo = 0;
+                } else {
+                    valor_consumo = 20;
+                }
+
+                if (tipo_quarto[apartamento] == 1) {
+                    valor_diaria = 50;
+                } else {
+                    valor_diaria = 100;
+                }
+
+                numero_dias = ((mes_saida[apartamento] - 1)*30  +  dia_saida[apartamento]) - ((mes_entrada[apartamento] - 1)*30 + dia_entrada[apartamento]);
+                valor_total = (valor_diaria * numero_dias) + valor_consumo;
                 printf("Numero do Apartamento e numero de dias: Apt. %d e %d dias de estadia\n", apartamento, numero_dias);
-
-                if(tipo_quarto == 1 && consumo_frigobar == 1)
-                {
-                    valor_diaria = 50;
-                    consumo_frigobar = 20;
-                }
-                else if(tipo_quarto == 1 && consumo_frigobar == 0)
-                {
-                    valor_diaria = 50;
-                    consumo_frigobar = 0;
-                }
-                else if(tipo_quarto == 2 && consumo_frigobar == 1)
-                {
-                    valor_diaria = 100;
-                    consumo_frigobar = 20;
-                }
-                else
-                {
-                    valor_diaria = 100;
-                    consumo_frigobar = 0;
-                }
-
-                valor_total = (valor_diaria * numero_dias) + consumo_frigobar;
-                printf("O valor total sera: %.f reais", valor_total);
+                printf("O valor total sera: %.d reais", valor_total);
                 break;
 
             case 3:
-                printf("Digite o seu nome: \n");
-                scanf("%s", nome_hospede);
+                printf("Ola cliente, por favor digite o numero do quarto:\n");
+                scanf("%d", &apartamento);
+
+                if (ocupado[apartamento] == 0){
+                    printf("Quarto vazio, nao ha o que alterar.\t\n");
+                break;
+                }
+
+
+                printf("Oi %s, seu tipo de quarto: %d\n", nome_hospede[apartamento], tipo_quarto[apartamento]);
+                printf("Dia de entrada e mes: %.d/%.d\n", dia_entrada[apartamento], mes_entrada[apartamento]);
+                printf("Dia de saida e mes: %.d/%.d\n", dia_saida[apartamento], mes_saida[apartamento]);
+
+
+
+                printf("\tDigite as novas informacoes\n");
+
+
 
                 printf("Digite o tipo de quarto desejado (1 para solteiro ou 2 para casal): \n");
-                scanf("%d", &tipo_quarto);
+                printf("Caso nao seja interesse do cliente mudar, favor digitar o atual tipo de quarto: \n");
+                scanf("%d", &tipo_quarto[apartamento]);
 
-                printf("Digite a data de entrada e saida: \n");
-                scanf("%f %f", &data_entrada, &data_saida);
+                printf("Digite o dia e mes de entrada e o dia e mes de saida: \n");
 
-                printf("Digite o numero do apartamento escolhido (1 a 10) e o numero de dias: \n");
-                scanf("%d %d", &apartamento, &numero_dias);
+                printf("Por exemplo 03(dia) (04) mes 15(dia de saida) 04(mes de saida) \n");
+                scanf("%d", &dia_entrada[apartamento]);
+                scanf("%d", &mes_entrada[apartamento]);
+                scanf( "%d", &dia_saida[apartamento]);
+                scanf("%d", &mes_saida[apartamento]);
 
-                printf("Deseja consumir a taxa do frigobar (1 e 0): \n");
-                scanf("%f", &consumo_frigobar);
+                printf("Deseja consumir a taxa do frigobar? 1 para Nao, 2 para Sim \n");
+                scanf("%d", &consumo_frigobar[apartamento]);
+
+                printf("Cadastro completo.\n");
+
+
                 break;
+
+
+            case 4:
+                printf("Digite o numero do quarto desejado para limpeza\n");
+                scanf("%d", &apartamento);
+
+                servico_de_quarto[apartamento]= 1;
+                        break;
+
+
+
+
 
             case 0:
                 return 0;

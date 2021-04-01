@@ -1,18 +1,25 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #define MAX 10
+
+
+//CRUD v1.0 = Versão com tudo funcionando certinho
+//CRUD v1.1 = Versão com a variável servico_de_quarto e com a limpeza de quarto no Menu
+
 
 int main()
 {
     int menu, numero_dias, apartamento, tipo_quarto[MAX];
-    int valor_diaria, valor_total, consumo_frigobar[MAX], dia_entrada[MAX], mes_entrada[MAX], dia_saida[MAX], mes_saida[MAX], valor_consumo, ocupado[MAX];
+    int valor_diaria, valor_total, consumo_frigobar[MAX], dia_entrada[MAX], mes_entrada[MAX], dia_saida[MAX], mes_saida[MAX], valor_consumo, ocupado[MAX], servico_de_quarto[MAX];
     char nome_hospede[MAX][20];
 
     for (int i = 0; i < MAX; i++){
         ocupado[i] = 0;
     }
 
+    for (int i = 0; i < MAX; i++) {
+        servico_de_quarto[i] = 1; //Tem que comecar com 1, visto que o quarto vai estar limpo antes do cliente usar
+    }
 
     do
     {
@@ -20,6 +27,7 @@ int main()
         printf("1. Cadastro\n");
         printf("2. Consulta\n");
         printf("3. Alteracao\n");
+        printf("4. Limpeza do Quarto\n"); // Opcao para utilizacao do servico_de_quarto declarado no CRUD parte 1
         printf("0. Sair\n");
 
         scanf("%d", &menu);
@@ -32,6 +40,10 @@ int main()
 
                 if (ocupado[apartamento] == 1){
                     printf("O quarto esta ocupado, tente outro.\n");
+                    break;
+                }
+                if (servico_de_quarto[apartamento] == 0){
+                    printf("O quarto desejado nao esta limpo.\n");
                     break;
                 }
 
@@ -53,9 +65,11 @@ int main()
                 printf("Deseja consumir a taxa do frigobar? 1 para Nao, 2 para Sim \n");
                 scanf("%d", &consumo_frigobar[apartamento]);
 
+
                 printf("Cadastro completo.\n");
 
                 ocupado[apartamento] = 1;
+                servico_de_quarto[apartamento] = 0;
                 break;
 
             case 2:
@@ -88,6 +102,7 @@ int main()
             case 3:
                 printf("Ola cliente, por favor digite o numero do quarto:\n");
                 scanf("%d", &apartamento);
+
                 if (ocupado[apartamento] == 0){
                     printf("Quarto vazio, nao ha o que alterar.\t\n");
                 break;
@@ -123,6 +138,17 @@ int main()
 
 
                 break;
+
+
+            case 4:
+                printf("Digite o numero do quarto desejado para limpeza\n");
+                scanf("%d", &apartamento);
+
+                servico_de_quarto[apartamento]= 1;
+                        break;
+
+
+
 
 
             case 0:

@@ -130,6 +130,11 @@ int main()
                 scanf("%d", &apartamento);
                 apartamento--;
 
+                if (quarto[apartamento].ocupado == 0) {
+                    printf("Quarto vazio, nao ha o que consultar.\t\n");
+                    break;
+                }
+
                 consulta (apartamento);
 
                 if (quarto[apartamento].hospede.consumo_frigobar == 1) {

@@ -33,19 +33,24 @@ int calculo_valor_total (int valor_diaria, int numero_dias, int valor_consumo){
     return valor_total;
 }
 
-void cadastro (int apartamento){
+void cadastro (int apartamento, int e_alteracao){
     printf("Digite o nome do cliente:\n");
     scanf("%s", quarto[apartamento].hospede.nome_hospede);
     fflush(stdin);
-
-    printf("Digite o dia e mes de entrada e o dia e mes de saida no formato abaixo:\n");
-
-    printf("Dia de entrada:Ex(03)\n");
-    printf("Mes de entrada:Ex(02)\n");
+    if(e_alteracao == 1) {
+        printf("Digite as novas datas de saida no formato abaixo:\n");
+    }
+    else{
+        printf("Digite o dia e mes de entrada e o dia e mes de saida no formato abaixo:\n");
+        printf("Dia de entrada:Ex(03)\n");
+        printf("Mes de entrada:Ex(02)\n");
+    }
     printf("Dia de saida:(07)\n");
     printf("Mes de saida:(02)\n");
-    scanf("%d", &quarto[apartamento].hospede.dia_entrada);
-    scanf("%d", &quarto[apartamento].hospede.mes_entrada);
+    if (e_alteracao == 0) {
+        scanf("%d", &quarto[apartamento].hospede.dia_entrada);
+        scanf("%d", &quarto[apartamento].hospede.mes_entrada);
+    }
     scanf( "%d", &quarto[apartamento].hospede.dia_saida);
     scanf("%d", &quarto[apartamento].hospede.mes_saida);
 
@@ -118,7 +123,7 @@ int main()
                     break;
                 }
 
-                cadastro (apartamento);
+                cadastro (apartamento, 0);
 
                 quarto[apartamento].ocupado = 1;
                 quarto[apartamento].servico_de_quarto = 0;
@@ -171,7 +176,7 @@ int main()
 
                 printf("\tDigite as novas informacoes\n");
 
-                cadastro (apartamento);
+                cadastro (apartamento, 1);
 
                 break;
 

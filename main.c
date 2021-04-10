@@ -37,9 +37,11 @@ void cadastro (int apartamento, int e_alteracao){
     printf("Digite o nome do cliente:\n");
     scanf("%s", quarto[apartamento].hospede.nome_hospede);
     fflush(stdin);
-
-    printf("Digite o dia e mes de entrada e o dia e mes de saida no formato abaixo:\n");
-    if(e_alteracao == 0) {
+    if(e_alteracao == 1) {
+        printf("Digite as novas datas de saida no formato abaixo:\n");
+    }
+    else{
+        printf("Digite o dia e mes de entrada e o dia e mes de saida no formato abaixo:\n");
         printf("Dia de entrada:Ex(03)\n");
         printf("Mes de entrada:Ex(02)\n");
     }
